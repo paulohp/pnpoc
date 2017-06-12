@@ -1,0 +1,14 @@
+use_frameworks!
+project 'JeniusPNPOC.xcodeproj'
+
+target 'JeniusPNPOC' do
+  # Required for Urban Airship
+  pod 'UrbanAirship-iOS-SDK'
+end
+
+target 'ServiceExtension' do
+platform :ios, '10.0'
+  # Pods for Service Extension
+  pod 'UrbanAirship-iOS-AppExtensions'
+end
+
