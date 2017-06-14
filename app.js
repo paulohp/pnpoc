@@ -124,7 +124,33 @@ export default class AirshipSample extends Component {
       notificationsEnabled: false,
     }
 
+    UrbanAirship.setUserNotificationsEnabled(true);
+
     this.handleNotificationsEnabled = this.handleNotificationsEnabled.bind(this);
+
+    UrbanAirship.addListener("notificationResponse", (response) => {
+      console.log('notificationResponse:', JSON.stringify(response));
+      alert("notificationResponse: " + response.notification.alert);
+    });
+
+    UrbanAirship.addListener("pushReceived", (notification) => {
+      console.log('pushReceived:', JSON.stringify(notification));
+      alert("pushReceived: " + notification.alert);
+    });
+
+    UrbanAirship.addListener("deepLink", (event) => {
+      console.log('deepLink:', JSON.stringify(event));
+      alert("deepLink: " + event.deepLink);
+    });
+
+    UrbanAirship.addListener("register", (event) => {
+      console.log('registration:', JSON.stringify(event));
+      this.setState({channelId:event.channelId})
+    });
+
+    UrbanAirship.addListener("notificationOptInStatus", (event) => {
+      console.log('notificationOptInStatus:', JSON.stringify(event));
+    });
 
   }
 
@@ -145,31 +171,6 @@ export default class AirshipSample extends Component {
     UrbanAirship.isLocationEnabled().then ((enabled) => {
       this.setState({locationEnabled:enabled})
     })
-
-    UrbanAirship.addListener("notificationResponse", (response) => {
-      console.log('notificationResponse:', JSON.stringify(response));
-      alert("notificationResponse: " + response.notification.alert);
-    });
-
-    UrbanAirship.addListener("pushReceived", (notification) => {
-      console.log('pushReceived:', JSON.stringify(notification));
-      alert("pushReceived: " + notification.alert);
-    });
-
-    UrbanAirship.addListener("deepLink", (event) => {
-      console.log('deepLink:', JSON.stringify(event));
-      alert("deepLink: " + event.deepLink);
-    });
-
-    UrbanAirship.addListener("registration", (event) => {
-      console.log('registration:', JSON.stringify(event));
-      this.state.channelId = channelId;
-      this.setState(this.state);
-    });
-
-    UrbanAirship.addListener("notificationOptInStatus", (event) => {
-      console.log('notificationOptInStatus:', JSON.stringify(event));
-    });
   }
 
   render() {
